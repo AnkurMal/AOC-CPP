@@ -1,7 +1,6 @@
 #pragma once
 
-#include "day2.hpp"
-#include "day5.hpp"
+#include "intcode.hpp"
 #include "path.hpp"
 #include <algorithm>
 #include <fstream>
