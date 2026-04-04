@@ -1,5 +1,5 @@
 add_rules("mode.debug", "mode.release")
-add_cxxflags("/nologo /fsanitize=address /Zi /EHsc /std:c++latest /W4 /O2 /diagnostics:caret /diagnostics:color")
+add_cxxflags("/nologo /fsanitize=address /Zi /EHsc /std:c++latest /W4 /O2 /diagnostics:caret /diagnostics:color /utf-8")
 
 add_requires("boost")
 
