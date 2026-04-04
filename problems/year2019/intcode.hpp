@@ -26,15 +26,15 @@ auto get_value(const vector<long long> &vec, long long mode, long long pos,
     return 0LL;
 }
 
-long long get_address(vector<long long> &vec, long long mode, long long pos,
-                      long long base) {
+auto get_address(vector<long long> &vec, long long mode, long long pos,
+                 long long base) {
     if (mode == 0) return vec[pos];
     else if (mode == 2) return vec[pos] + base;
     return 0LL;
 }
 
 auto intcode(vector<long long> &vec, int input = 0) {
-    auto original_size = vec.size();
+    auto original_size{vec.size()};
     vec.resize(1000000, 0);
     int opcode{};
     long long base{}, output{}, i{};
@@ -49,21 +49,21 @@ auto intcode(vector<long long> &vec, int input = 0) {
 
         switch (opcode) {
         case 1: {
-            long long a3 = get_address(vec, m3, i + 3, base);
+            long long a3{get_address(vec, m3, i + 3, base)};
             vec[a3] = v1 + v2;
             i += 4;
             break;
         }
 
         case 2: {
-            long long a3 = get_address(vec, m3, i + 3, base);
+            long long a3{get_address(vec, m3, i + 3, base)};
             vec[a3] = v1 * v2;
             i += 4;
             break;
         }
 
         case 3: {
-            long long a1 = get_address(vec, m1, i + 1, base);
+            long long a1{get_address(vec, m1, i + 1, base)};
             vec[a1] = input;
             i += 2;
             break;
@@ -88,14 +88,14 @@ auto intcode(vector<long long> &vec, int input = 0) {
         }
 
         case 7: {
-            long long a3 = get_address(vec, m3, i + 3, base);
+            long long a3{get_address(vec, m3, i + 3, base)};
             vec[a3] = v1 < v2;
             i += 4;
             break;
         }
 
         case 8: {
-            long long a3 = get_address(vec, m3, i + 3, base);
+            long long a3{get_address(vec, m3, i + 3, base)};
             vec[a3] = v1 == v2;
             i += 4;
             break;
