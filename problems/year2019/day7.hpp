@@ -1,11 +1,36 @@
 #pragma once
 
-#include "intcode.hpp"
 #include "path.hpp"
 #include <algorithm>
 #include <fstream>
 #include <print>
+#include <ranges>
+#include <string>
 #include <vector>
+
+inline int get_value(const std::vector<int> &vec, int mode, int pos) {
+    if (mode == 1) {
+        return vec[pos];
+    }
+
+    int address = vec[pos];
+    if (address < 0 || address >= static_cast<int>(vec.size())) {
+        return 0;
+    }
+
+    return vec[address];
+}
+
+auto get_data(std::ifstream &file) {
+    std::string data{std::istreambuf_iterator{file}, {}};
+    return data
+           | std::views::lazy_split(',')
+           | std::views::transform([](auto &&rng) {
+                 auto x = rng | std::views::common;
+                 return std::stoi(std::string{x.begin(), x.end()});
+             })
+           | std::ranges::to<std::vector>();
+}
 
 inline int run_once(std::vector<int> vec, const std::vector<int> &inputs) {
     int i{}, opcode, output{};
