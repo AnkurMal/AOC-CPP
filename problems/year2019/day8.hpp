@@ -26,7 +26,7 @@ namespace day8 {
         int adv{25 * 6}, index{};
         auto min{INTMAX_MAX};
 
-        for (int i = 0; i < str.length(); i += adv) {
+        for (int i = 0; i < static_cast<int>(str.length()); i += adv) {
             auto zero_count{ranges::count(str.substr(i, adv), '0')};
             if (zero_count < min) {
                 min = zero_count;
@@ -43,7 +43,7 @@ namespace day8 {
         int wide{25}, adv{wide * 6};
         vector<string_view> vec;
 
-        for (int i = 0; i < str.length(); i += adv)
+        for (int i = 0; i < static_cast<int>(str.length()); i += adv)
             vec.emplace_back(str.substr(i, adv));
 
         println("Part 2: ");
