@@ -33,7 +33,7 @@ namespace day7 {
         if (map.contains(search)) return map[search];
         else {
             uint16_t ans{};
-            auto vec{spl[get_index(spl, search)]};
+            auto &vec{spl[get_index(spl, search)]};
 
             if (vec.size() == 3) {
                 if (is_digit(vec[0])) parse_digit(vec[0], ans);
@@ -61,11 +61,11 @@ namespace day7 {
         }
     }
 
-    auto get_split(string_view string) {
-        return string
+    auto get_split() {
+        return str
                | views::split('\n')
                | views::transform([](auto &&x) {
-                     return string_view{x}
+                     return x
                             | views::split(' ')
                             | views::transform(
                                 [](auto &&y) { return string_view{y}; })
@@ -75,14 +75,14 @@ namespace day7 {
     }
 
     void part1() {
-        auto spl{get_split(str)};
+        auto spl{get_split()};
         unordered_map<string_view, uint16_t> map;
 
         println("Part 1: {}", get_value(spl, "a", map));
     }
 
     void part2() {
-        auto spl{get_split(str)};
+        auto spl{get_split()};
         unordered_map<string_view, uint16_t> map;
 
         auto val_a{get_value(spl, "a", map)};
