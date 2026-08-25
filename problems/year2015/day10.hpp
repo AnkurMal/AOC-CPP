@@ -33,5 +33,5 @@ namespace day10 {
 
     void part1() { println("Part 1: {}", count_say(40)); }
 
-    void part2() { println("Part 1: {}", count_say(50)); }
+    void part2() { println("Part 2: {}", count_say(50)); }
 } // namespace day10
