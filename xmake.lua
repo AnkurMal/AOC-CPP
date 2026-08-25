@@ -1,14 +1,13 @@
 add_rules("mode.debug", "mode.release")
-add_cxxflags("/nologo /fsanitize=address /Zi /EHsc /std:c++latest /W4 /O2 /diagnostics:caret /diagnostics:color /utf-8")
+-- add_cxxflags("/nologo /fsanitize=address /Zi /EHsc /std:c++latest /W4 /O2 /diagnostics:caret /diagnostics:color /utf-8")
 
-add_requires("boost")
+set_languages("c++26")
 
 target("AOC_CPP")
     set_kind("binary")
     add_files("src/*.cpp")
     add_includedirs("utilities")
     add_includedirs("problems")
-    add_packages("boost")
 
 --
 -- If you want to known more usage about xmake, please see https://xmake.io
