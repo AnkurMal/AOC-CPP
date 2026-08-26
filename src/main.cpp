@@ -1,3 +1,3 @@
-#include "year2015/day9.hpp"
+#include "year2015/day13.hpp"
 
-int main() { day9::part2(); }
+int main() { day13::part2(); }
