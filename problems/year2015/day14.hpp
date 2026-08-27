@@ -8,44 +8,13 @@
 #include <ranges>
 #include <vector>
 
-#include <meta>
-#include <format>
-#include <print>
-#include <string>
-
-#define DERIVE_FORMAT(T)                                                       \
-    namespace std {                                                            \
-        template <>                                                            \
-        struct formatter<T> {                                                  \
-            constexpr auto parse(std::format_parse_context &ctx) {             \
-                return ctx.begin();                                            \
-            }                                                                  \
-            auto format(const T &p, auto &ctx) const {                         \
-                auto out = ctx.out();                                          \
-                out = std::format_to(out, #T " {{");                           \
-                bool first = true;                                             \
-                template for (constexpr auto mem : std::define_static_array(   \
-                                  std::meta::nonstatic_data_members_of(        \
-                                      ^^T, std::meta::access_context::         \
-                                               current()))) {                  \
-                    if (!first) out = std::format_to(out, ", ");               \
-                    first = false;                                             \
-                    out = std::format_to(out, "{}: {}",                        \
-                                         std::meta::identifier_of(mem),        \
-                                         p.[:mem:]);                           \
-                }                                                              \
-                out = std::format_to(out, "}}");                               \
-                return out;                                                    \
-            }                                                                  \
-        };                                                                     \
-    }
-
 using namespace std;
 
 typedef struct {
-    int speed, duration, rest;
+    int speed, duration, rest, passed, total, points;
+    bool brest;
+
 } Reindeer;
-DERIVE_FORMAT(Reindeer);
 
 namespace day14 {
     ifstream file{PATH "/data/year2015/day14.txt"};
@@ -77,12 +46,31 @@ namespace day14 {
     void part2() {
         int second = 2503;
         vector<Reindeer> vec;
-        int winner{};
 
         while (getline(file, line)) {
             auto spl = line | views::split(' ') | ranges::to<vector<string>>();
-            vec.push_back({stoi(spl[3]), stoi(spl[6]), stoi(spl[13])});
+            vec.push_back(
+                {stoi(spl[3]), stoi(spl[6]), stoi(spl[13]), stoi(spl[6])});
         }
-        println("Part 1: {}", vec);
+
+        for (int j = 0; j < second; j++) {
+            for (auto &i : vec) {
+                i.passed--;
+                if (!i.brest) i.total += i.speed;
+
+                if (i.passed == 0) {
+                    i.passed = (i.brest) ? i.duration : i.rest;
+                    i.brest = !i.brest;
+                }
+            }
+
+            auto mx = ranges::max(vec, {}, &Reindeer::total);
+            for (auto &i : vec) {
+                if (i.total == mx.total) i.points++;
+            }
+        }
+
+        auto mx = ranges::max(vec, {}, &Reindeer::points);
+        println("Part 2: {}", mx.points);
     }
 } // namespace day14

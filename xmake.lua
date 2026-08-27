@@ -4,7 +4,7 @@ add_rules("mode.debug", "mode.release")
 set_languages("c++26")
 -- set_optimize("fastest")
 add_requires("nlohmann_json")
-add_cxxflags("-freflection", {force = true})
+--add_cxxflags("-freflection", {force = true})
 
 target("AOC_CPP")
     set_kind("binary")
